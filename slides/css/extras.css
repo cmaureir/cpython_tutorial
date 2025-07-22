@@ -1,0 +1,2 @@
+/* Links using the URL as text */
+a.url:before { font-family: monospace; content: attr(href); }
