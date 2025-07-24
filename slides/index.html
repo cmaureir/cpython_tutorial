@@ -53,32 +53,367 @@
   <h1 class="r-fit-text">Navigating cpython</h1>
 </section>
 
+<section data-transition="fade-in fade-out">
+  <img style="width: 90%;" src="img/interpreters1.png" />
+</section>
+
+<section data-transition="fade-in fade-out">
+  <img style="width: 90%;" src="img/interpreters2.png" />
+</section>
+
+<section data-auto-animate data-background-image="img/background_stars.svg"
+    data-auto-animate="cubic-bezier(0.77, 0, 0.175, 1.0)">
+  <img data-id="logo1" data-auto-animate-delay="0.0" style="margin: 20px; width: 130px;" src="img/micropython.png" />
+  <img data-id="logo7" data-auto-animate-delay="0.3" style="margin: 20px; width: 200px;" src="img/logo_graalpy.svg" />
+  <img data-id="logo3" data-auto-animate-delay="0.6" style="margin: 20px; width: 200px;" src="img/jython.png" />
+  <img data-id="logo4" data-auto-animate-delay="0.9" style="margin: 20px; width: 200px; background: white; padding: 10px;" src="img/pypy.svg" />
+  <img data-id="logo5" data-auto-animate-delay="1.2" style="margin: 20px; width: 180px;" src="img/pyston.jpg" />
+  <img data-id="logo6" data-auto-animate-delay="1.5" style="margin: 20px; width: 200px;" src="img/cinder.svg" />
+  <img data-id="logo2" data-auto-animate-delay="1.8" style="margin: 20px; width: 100px;" src="img/rustpython.svg" />
+  <img data-id="logo8" data-auto-animate-delay="2.1" style="margin: 20px; width: 180px;" src="img/logo_mojo.png" />
+</section>
+
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
   <h2>CPython is the standard implementation</h2>
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <h2>There are other implementations, but we don't need them now</h2>
+  <h2>We need to understand C <i class="qt-lemon">a bit</i></h2>
+</section>
+
+<section data-transition="slide-in fade-out">
+  <h3>Python and C (1/3)</h3>
+  <div id="left">
+    <pre class="fade-in fragment" data-fragment-index="1" style="font-size: 40%;width: 90%;"><code class="python" data-trim data-noescape>
+    <span class="fragment" data-fragment-index="1"># A comment</span>
+    <span class="fragment" data-fragment-index="2">import my_module</span>
+
+    <span class="fragment" data-fragment-index="3">def add(a: int, b: float) -> float:</span>
+    <span class="fragment" data-fragment-index="3">    return a + b</span>
+
+
+    <span class="fragment" data-fragment-index="4">def main():</span>
+    <span class="fragment" data-fragment-index="5">    msg: str = "Hello World"</span>
+    <span class="fragment" data-fragment-index="5">    x: int = 3</span>
+    <span class="fragment" data-fragment-index="5">    y: float = 0.14</span>
+    <span class="fragment" data-fragment-index="6">    z: float = add(x, y)</span>
+    <span class="fragment" data-fragment-index="6">    print("%f" % z)</span>
+
+    <span class="fragment" data-fragment-index="4">if __name__ == "__main__":</span>
+    <span class="fragment" data-fragment-index="4">    main()</span>
+    </code></pre>
+  </div>
+  <div id="right">
+    <pre class="fade-in fragment" data-fragment-index="2" style="font-size: 40%;width: 90%;"><code class="c" data-trim data-noescape>
+    <span class="fragment" data-fragment-index="1">// A comment</span>
+    <span class="fragment" data-fragment-index="2">#include &lt;my_module.h&gt;</span>
+
+    <span class="fragment" data-fragment-index="3">float add(int a, float b) {</span>
+    <span class="fragment" data-fragment-index="3">    return a + b;</span>
+    <span class="fragment" data-fragment-index="3">}</span>
+
+    <span class="fragment" data-fragment-index="4">int main(){</span>
+    <span class="fragment" data-fragment-index="5">    char msg[] = "Hello World";</span>
+    <span class="fragment" data-fragment-index="5">    int x = 3;</span>
+    <span class="fragment" data-fragment-index="5">    float y = 0.14;</span>
+    <span class="fragment" data-fragment-index="6">    float z = add(x, y);</span>
+    <span class="fragment" data-fragment-index="6">    printf("%f", z)</span>
+
+    <span class="fragment" data-fragment-index="4">    return 0;</span>
+    <span class="fragment" data-fragment-index="4">}</span>
+
+    </code></pre>
+  </div>
+</section>
+
+<section data-transition="fade-in fade-out">
+  <h3>Python and C (2/3)</h3>
+  <div id="left" class="fragment">
+    <pre style="font-size: 50%;width: 95%;"><code class="python" data-trim data-noescape>
+    l = [1, 2, 3, 4, 5]
+
+    l2 = []
+
+    l2.append(42)
+    l2.append(17)
+    l2.append("Hallo")
+    </code></pre>
+  </div>
+  <div id="right" class="fragment">
+    <pre style="font-size: 50%;width: 95%;"><code class="c" data-trim data-noescape>
+    int a[] = {1, 2, 3, 4, 5};
+
+    int *a2 = malloc(3 * sizeof(int));
+
+    a2[0] = 42;
+    a2[1] = 17
+    a2[2] = "Hallo" // BOOM! 🔥
+    </code></pre>
+    <pre style="font-size: 50%;width: 95%;" class="fragment"><code class="c" data-trim data-noescape>
+    // Don't forget to free
+    // the memory you allocated
+    free(a2);
+    </code></pre>
+  </div>
+</section>
+
+<section data-transition="fade-in fade-out" data-background-image="img/background_solarsystem.png">
+  <h2>Python and C (3/3)</h2>
+  <div id="left" class="fragment">
+    <pre style="font-size: 45%;width: 98%;"><code class="c" data-trim data-noescape>
+    typedef struct {
+      size_t size;
+      int *data;
+    } int_vector;
+
+    int *create_vector(size_t n) {
+        return malloc(n * sizeof(int));
+    }
+
+    void set_vector(int_vector *v,
+                    size_t n, int x) {
+      if(v) {
+        if(n >= v->size) {
+          resize_vector(v, n);
+        }
+        v->data[n] = x;
+      }
+    }
+    </code></pre>
+  </div>
+  <div id="right" class="fragment">
+    <pre style="font-size: 50%;width: 95%;"><code class="c" data-trim data-noescape>
+    // Yay, we got "kind of" a vector
+    int_vector *v = create_vector(10);
+    set_vector(v, 0, 123);
+    </code></pre
+    <ul>
+      <li><i class="qt-lemon">We might need to reinvent the wheel</i></li>
+    </ul>
+    <p><a href="https://stackoverflow.com/questions/7826163/whats-the-best-c-implementation-of-the-c-vector">source</a></p>
+  </div>
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <h2>We need to understand C a bit</h2>
+  <h2>C pointers</h2>
+  TODO
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <h2>A few C and Python comparison</h2>
+  <h2>The <i class="qt-lemon"><code>cpython</code></i> repo structure</h2>
+
+  <ul>
+      <li class="fragment fade-in" data-fragment-index="2"><i class="blue-light">Doc</i> - Official documentation</li>
+      <li class="fragment fade-in" data-fragment-index="3"><i class="blue-light">Include</i> - Interpreter header files</li>
+      <li class="fragment fade-in" data-fragment-index="4"><i class="blue-light">Lib</i> - stdlib in pure Python</li>
+      <li class="fragment fade-in" data-fragment-index="5"><i class="blue-light">Modules</i> - stdlib in C</li>
+      <li class="fragment fade-in" data-fragment-index="6"><i class="blue-light">Objects</i> - built-in types</li>
+      <li class="fragment fade-in" data-fragment-index="7"><i class="blue-light">Python</i> - CPython runtime</li>
+  </ul>
+</section>
+
+  <section>
+    <h3>PyObject</h3>
+    <pre style="font-size: 50%;width: 80%;"><code class="c" data-trim data-noescape>
+typedef struct _object {
+    _PyObject_HEAD_EXTRA
+    Py_ssize_t ob_refcnt;
+    struct _typeobject *ob_type;
+} PyObject;
+    </code></pre>
+  </section>
+
+
+<section>
+    <div id="left">
+    <pre style="font-size: 20%;width: 90%;"><code class="c" data-trim data-noescape>
+typedef struct _typeobject {
+    PyObject_VAR_HEAD
+    const char *tp_name; /* For printing, in format "<module>.<name>" */
+    Py_ssize_t tp_basicsize, tp_itemsize; /* For allocation */
+
+    /* Methods to implement standard operations */
+
+    destructor tp_dealloc;
+    Py_ssize_t tp_vectorcall_offset;
+    getattrfunc tp_getattr;
+    setattrfunc tp_setattr;
+    PyAsyncMethods *tp_as_async; /* formerly known as tp_compare (Python 2)
+                                    or tp_reserved (Python 3) */
+    reprfunc tp_repr;
+
+    /* Method suites for standard classes */
+
+    PyNumberMethods *tp_as_number;
+    PySequenceMethods *tp_as_sequence;
+    PyMappingMethods *tp_as_mapping;
+
+    /* More standard operations (here for binary compatibility) */
+
+    hashfunc tp_hash;
+    ternaryfunc tp_call;
+    reprfunc tp_str;
+    getattrofunc tp_getattro;
+    setattrofunc tp_setattro;
+
+    /* Functions to access object as input/output buffer */
+    PyBufferProcs *tp_as_buffer;
+
+    /* Flags to define presence of optional/expanded features */
+    unsigned long tp_flags;
+
+    const char *tp_doc; /* Documentation string */
+
+    /* Assigned meaning in release 2.0 */
+    /* call function for all accessible objects */
+    traverseproc tp_traverse;
+
+    /* delete references to contained objects */
+    inquiry tp_clear;
+
+    /* Assigned meaning in release 2.1 */
+    /* rich comparisons */
+    richcmpfunc tp_richcompare;
+
+    /* weak reference enabler */
+    Py_ssize_t tp_weaklistoffset;
+
+    /* Iterators */
+    getiterfunc tp_iter;
+    iternextfunc tp_iternext;
+
+    </code></pre>
+    </div>
+    <div id="right">
+    <pre style="font-size: 20%;width: 90%;"><code class="c" data-trim data-noescape>
+    /* Attribute descriptor and subclassing stuff */
+    struct PyMethodDef *tp_methods;
+    struct PyMemberDef *tp_members;
+    struct PyGetSetDef *tp_getset;
+    struct _typeobject *tp_base;
+    PyObject *tp_dict;
+    descrgetfunc tp_descr_get;
+    descrsetfunc tp_descr_set;
+    Py_ssize_t tp_dictoffset;
+    initproc tp_init;
+    allocfunc tp_alloc;
+    newfunc tp_new;
+    freefunc tp_free; /* Low-level free-memory routine */
+    inquiry tp_is_gc; /* For PyObject_IS_GC */
+    PyObject *tp_bases;
+    PyObject *tp_mro; /* method resolution order */
+    PyObject *tp_cache;
+    PyObject *tp_subclasses;
+    PyObject *tp_weaklist;
+    destructor tp_del;
+
+    /* Type attribute cache version tag. Added in version 2.6 */
+    unsigned int tp_version_tag;
+
+    destructor tp_finalize;
+    vectorcallfunc tp_vectorcall;
+
+    /* bpo-37250: kept for backwards compatibility in CPython 3.8 only */
+    Py_DEPRECATED(3.8) int (*tp_print)(PyObject *, FILE *, int);
+
+#ifdef COUNT_ALLOCS
+    /* these must be last and never explicitly initialized */
+    Py_ssize_t tp_allocs;
+    Py_ssize_t tp_frees;
+    Py_ssize_t tp_maxalloc;
+    struct _typeobject *tp_prev;
+    struct _typeobject *tp_next;
+#endif
+} PyTypeObject;
+
+/* The *real* layout of a type object when allocated on the heap */
+typedef struct _heaptypeobject {
+    /* Note: there's a dependency on the order of these members
+       in slotptr() in typeobject.c . */
+    PyTypeObject ht_type;
+    PyAsyncMethods as_async;
+    PyNumberMethods as_number;
+    PyMappingMethods as_mapping;
+    PySequenceMethods as_sequence; /* as_sequence comes after as_mapping,
+                                      so that the mapping wins when both
+                                      the mapping and the sequence define
+                                      a given operator (e.g. __getitem__).
+                                      see add_operators() in typeobject.c . */
+    PyBufferProcs as_buffer;
+    PyObject *ht_name, *ht_slots, *ht_qualname;
+    struct _dictkeysobject *ht_cached_keys;
+    /* here are optional user slots, followed by the members. */
+} PyHeapTypeObject;
+    </code></pre>
+    </div>
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <h2>The repo structure</h2>
+  <h2>Python C-API</h2>
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <h2>Python structures (PyObject)</h2>
+  <h3>Strings</h3>
+  <p>
+    <a href="https://docs.python.org/3/c-api/unicode.html">docs.python.org/3/c-api/unicode.html</a>
+  </p>
+  <pre style="font-size: 70%;width: 80%;"><code class="c" data-trim data-noescape>
+  char msg[] = "Hello World!";
+  PyObject *s = PyUnicode_FromString(msg);
+  ...
+  Py_ssize_t  = PyUnicode_GetLength(s);
+  </code></pre>
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <h2>Python convenient functions</h2>
+  <h3>Lists</h3>
+  <p>
+    <a href="https://docs.python.org/3/c-api/unicode.html">docs.python.org/3/c-api/unicode.html</a>
+  </p>
+  <pre style="font-size: 70%;width: 80%;"><code class="c" data-trim data-noescape>
+  char msg[] = "Hello World!";
+  PyObject *s = PyUnicode_FromString(msg);
+
+  PyObject *l = PyList_New(0);
+  PyList_Append(l, s);
+  ...
+  </code></pre>
+</section>
+
+<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
+  <h3>Check what's the PyObject storing</h3>
+  <pre style="font-size: 80%;width: 80%;"><code class="c" data-trim data-noescape>
+  int PyUnicode_Check(PyObject *o);
+
+  int PyList_Check(PyObject *o);
+
+  int PyDict_Check(PyObject *o);
+
+  int PyFloat_Check(PyObject *o);
+
+  int PyTuple_Check(PyObject *o);
+  </code></pre>
+</section>
+
+<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
+  <h3>Parse arguments</h3>
+  <pre style="font-size: 50%;width: 100%;"><code class="c" data-trim data-noescape>
+  static PyObject* glob(PyObject* self, PyObject* args,
+                        PyObject* kwds){
+
+    const char *kwlist[] = {"directory", "recursive", 0};
+    const char *directory = nullptr;
+    const int *recursive = nullptr;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds,
+                                     "z|p",
+                                     const_cast&lt;char **&gt;(kwlist),
+                                     &amp;directory,
+                                     &amp;recursive)) {
+      return nullptr;
+    }
+    ...
+  </code></pre>
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
@@ -86,12 +421,22 @@
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <h2>C Pointers</h2>
+  <h2>From Python to Machine Code</h2>
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <h2>From Python to Machine Code</h2>
+  <h3 class="r-fit-text">How does <i class="qt-violet">Python</i> works?</h3>
+  <h3 class="r-fit-text fragment">How does <i class="qt-lemon">C</i><i class="qt-violet">Python</i> works?</h3>
 </section>
+
+<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
+  <img style="width: 90%;" src="img/python_diagram.png" />
+</section>
+
+<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
+  <img style="width: 90%;" src="img/python_diagram_2.png" />
+</section>
+
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
   <h3><i class="qt-lemon">End of Presentation</i></h3>
@@ -592,7 +937,7 @@ Offer to pick any language and have a solution for a them
 </section>
 
 <section data-transition="slide-in fade-out">
-  <h3>Python and C</h3>
+  <h3>Python and C (2/3)</h3>
   <div id="left">
     <pre class="fade-in fragment" data-fragment-index="1" style="font-size: 40%;width: 90%;"><code class="python" data-trim data-noescape>
     <span class="fragment" data-fragment-index="1"># A comment</span>
