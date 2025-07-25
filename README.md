@@ -1,4 +1,4 @@
-# Understanding and expanding Python: hand-on experience with the Python internals
+# Understanding and expanding Python: hands-on experience with the Python internals
 
 On this tutorial you will learn to:
 
@@ -7,7 +7,7 @@ On this tutorial you will learn to:
 * Extend Python with C, Rust, and Zig.
 
 The session will be a combination of a theoretical introduction of the topics,
-followed by a hand-on experience on each step.
+followed by a hands-on experience on each step.
 
 Here is an outline of what will be done:
 
