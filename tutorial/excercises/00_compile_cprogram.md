@@ -3,7 +3,7 @@
 Consider the following snippet in C,
 that prints the `Hello, World!`.
 
-```
+```c
 #include <stdio.h>
 
 int main() {
@@ -17,7 +17,7 @@ In order to being able to execute the C code, you need to compile it first,
 meaning that you will execute a command that will transform the source code
 to a proper system executable.
 
-> ![NOTE]
+> [!NOTE]
 > This might sounds like more work compared to Python, but I promise
 > you will get used to it!.
 

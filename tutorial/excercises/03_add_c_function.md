@@ -18,7 +18,7 @@ As an example, we will look into a function that might be familiar to you, the
 In case you don't know what the built-in function does, it will list all the
 members of a variable type. In the case of an integer:
 
-```
+```py
 >>> i = 42
 >>> dir(i)
 ['__abs__', '__add__', '__and__', '__bool__', '__ceil__', '__class__', '__delattr__', '__dir__', '__divmod__', '__doc__', '__eq__', '__float__', '__floor__', '__floordiv__', '__format__', '__ge__', '__getattribute__', '__getnewargs__', '__getstate__', '__gt__', '__hash__', '__index__', '__init__', '__init_subclass__', '__int__', '__invert__', '__le__', '__lshift__', '__lt__', '__mod__', '__mul__', '__ne__', '__neg__', '__new__', '__or__', '__pos__', '__pow__', '__radd__', '__rand__', '__rdivmod__', '__reduce__', '__reduce_ex__', '__repr__', '__rfloordiv__', '__rlshift__', '__rmod__', '__rmul__', '__ror__', '__round__', '__rpow__', '__rrshift__', '__rshift__', '__rsub__', '__rtruediv__', '__rxor__', '__setattr__', '__sizeof__', '__str__', '__sub__', '__subclasshook__', '__truediv__', '__trunc__', '__xor__', 'as_integer_ratio', 'bit_count', 'bit_length', 'conjugate', 'denominator', 'from_bytes', 'imag', 'is_integer', 'numerator', 'real', 'to_bytes']
@@ -26,7 +26,7 @@ members of a variable type. In the case of an integer:
 where there are many useful functions for `int` objects.
 Similarly with another type, a Python list:
 
-```
+```py
 >>> l = []
 >>> dir(l)
 ['__add__', '__class__', '__class_getitem__', '__contains__', '__delattr__', '__delitem__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getstate__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'clear', 'copy', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
@@ -36,7 +36,7 @@ In some cases, is difficult to see all the names of the public methods
 because a lot of dunder ones get in the middle, so what you could do to see
 clear? Maybe something like this:
 
-```
+```py
 >>> l = []
 >>> [i for i in dir(l) if "__" not in i]
 ['append', 'clear', 'copy', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
@@ -51,12 +51,12 @@ for simplicity we will call it `pdir()`.
 If you search the code, you will find that the declaration of the `dir`
 function is in the `Python/bltinmodule.c` file, if you scroll a bit you will
 find a declaration of `builtin_methods`, and the line looks like this:
-```
+```c
 static PyMethodDef builtin_methods[] = {
 ```
 
 Inside that, you will find the definition of the `dir` function:
-```
+```c
     {"dir", builtin_dir, METH_VARARGS, dir_doc},
 ```
 here we have a few interesting components:
@@ -69,7 +69,7 @@ worry much about this, but you can read more
 * `dir_doc`, is the documentation you see when doing `help(dir)`.
 
 Look at the implementation of the `dir` function:
-```
+```c
 static PyObject *
 builtin_dir(PyObject *self, PyObject *args)
 {
@@ -85,7 +85,7 @@ It looks like, the important part that get the information
 is the line `return PyObject_Dir(arg);`, because the other one is related to
 the arguments, so we can use the same approach we used before:
 
-```
+```py
 >>> l = []
 >>> [i for i in dir(l) if "__" not in i]
 ```
@@ -96,7 +96,7 @@ but from C, and using some of Python's C-API.
 If we write that comprehension more explicitely, and incorporating
 a few C-isms so it's easier for us to write the C code.
 
-```
+```py
 l = []
 
 pdir_list = []
@@ -136,7 +136,7 @@ to a C-string, one needs to use a specific function called `PyUnicode_AsUTF8`.
 
 Remember we are starting from the `builtin_dir` implementation
 
-```
+```c
 static PyObject *
 builtin_dir(PyObject *self, PyObject *args)
 {
@@ -150,7 +150,7 @@ builtin_dir(PyObject *self, PyObject *args)
 
 so more or less the structure should be:
 
-```
+```c
 static PyObject *
 builtin_dir(PyObject *self, PyObject *args)
 {
@@ -168,7 +168,7 @@ builtin_dir(PyObject *self, PyObject *args)
 If we put everything together, we can re-write our Python code to:
 
 
-```
+```c
 static PyObject *
 builtin_pdir(PyObject *self, PyObject *args)
 {
@@ -209,7 +209,7 @@ builtin_pdir(PyObject *self, PyObject *args)
 
 Now, we can recompile cpython, and you will be able to have:
 
-```
+```py
 >>> l = []
 >>> dir(l)
 ['__add__', '__class__', '__class_getitem__', '__contains__', '__delattr__', '__delitem__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getstate__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'clear', 'copy', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
@@ -217,6 +217,6 @@ Now, we can recompile cpython, and you will be able to have:
 ['append', 'clear', 'copy', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
 ```
 
-> ![WARNING]
+> [!WARNING]
 > The temptation of making this a real contribution might be strong in you,
 > but don't do it :P

@@ -3,7 +3,7 @@
 There are many convenient containers in Python: `list`, `tuple`, `dict`, `set`,
 etc.
 
-> ![NOTE]
+> [!NOTE]
 > Did you know there is also a `fronzenset` ? check it out!
 
 Many of them have convenient methods that allow us to add/remove/modify
@@ -25,14 +25,14 @@ Once you have decided the one you want to modify, the steps are:
 
 For the `set.add` method, you will find it in `Objects/setobject.c`,
 and it looks like this:
-```
+```c
 static PyMethodDef set_methods[] = {
     SET_ADD_METHODDEF
     ...
 ```
 those capital letters are a macro (think about it as an alias) to the following
 code that can be found in `Objects/clinic/setobject.h.c`:
-```
+```c
 #define SET_ADD_METHODDEF    \
     {"add", (PyCFunction)set_add, METH_O, set_add__doc__},
 ```
@@ -40,14 +40,14 @@ code that can be found in `Objects/clinic/setobject.h.c`:
 2. Add your new defintion in both sides, for example if we create a different
    `set.add` implementation and we call it `set.add2`:
 
-```
+```c
 static PyMethodDef set_methods[] = {
     SET_ADD_METHODDEF
     SET_ADD2_METHODDEF
     ...
 ```
 and
-```
+```c
 #define SET_ADD2_METHODDEF    \
     {"add2", (PyCFunction)set_add2, METH_O, set_add2__doc__},
 ```
@@ -57,7 +57,7 @@ and
 5. Compile cpython
 6. Profit
 
-> ![IMPORTANT]
+> [!IMPORTANT]
 > Take inspiration from the definition that you want to mimic so you don't need
 > to write all those components from scratch
 
@@ -68,7 +68,7 @@ In case you have no ideas, you can do the following example.
 You have probably use lists in many programs, so the method `append` might not
 be something you just learned, but something you use normally to include
 new elements to a list:
-```
+```py
 >>> l = []
 >>> l.append(42)
 >>> l
@@ -81,7 +81,7 @@ new elements to a list:
 What if I want to add an element at the begining o the list?
 Many (if not all) of you will jump and say «Use `list.insert`!»,
 which is a correct!
-```
+```py
 >>> l.insert(0, 55)
 >>> l
 [55, 42, 21]
@@ -103,7 +103,7 @@ Go to the `Objects/listobject.c` file and find where is `LIST_APPEND_METHODDEF`
 added to the  `list_methods` structure, and add `LIST_PREPEND_METHODDEF`.
 
 The could should look like this:
-```
+```c
 static PyMethodDef list_methods[] = {
     {"__getitem__", list_subscript, METH_O|METH_COEXIST,
      PyDoc_STR("__getitem__($self, index, /)\n--\n\nReturn self[index].")},
@@ -125,13 +125,13 @@ file and copy the definitions, by transforming them accordenly to our new
 `list.prepend` method.
 
 For the initial macro, we will have:
-```
+```c
 #define LIST_PREPEND_METHODDEF    \
     {"prepend", (PyCFunction)list_prepend, METH_O, list_prepend__doc__},
 ```
 
 For the documentation, we will have:
-```
+```c
 PyDoc_STRVAR(list_prepend__doc__,
 "prepend($self, object, /)\n"
 "--\n"
@@ -144,7 +144,7 @@ the `list.insert` method, by mimicing the `insert(0, value)` approach we tried
 before.
 
 This is the `list_insert` implementation:
-```
+```c
   static PyObject *
   list_insert(PyObject *self, PyObject *const *args, Py_ssize_t nargs)
   {
@@ -178,13 +178,13 @@ This is the `list_insert` implementation:
 ```
 
 where this line is what we need:
-```
+```c
 return_value = list_insert_impl((PyListObject *)self, index, object);  // Bingo!
 ```
 becuase we know the `index` in the `list.prepend` case will be `0` always.
 Let's keep in mind this line, and now let's check the `list.append`
 implementation:
-```
+```c
   static PyObject *
   list_append(PyObject *self, PyObject *object)
   {
@@ -207,8 +207,8 @@ we took from the `list_insert` implementation.
 
 The final result looks like this:
 
-```
-+static PyObject *
+```c
+static PyObject *
 list_prepend(PyObject *self, PyObject *object)
 {
     PyObject *return_value = NULL;
@@ -223,7 +223,7 @@ list_prepend(PyObject *self, PyObject *object)
 
 Finally, we can recompile cpython, and try it out!
 
-```
+```py
 >>> l = [3]
 >>> l.append(23)
 >>> l

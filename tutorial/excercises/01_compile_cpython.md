@@ -1,6 +1,6 @@
 # Compile CPython
 
-> ![NOTE]
+> [!NOTE]
 > The CPython development guide provides a very detailed guide to build cpython
 > for all the platforms that are supported.
 >
@@ -48,7 +48,7 @@ Change the number accordinly.
 Once this process is over, you will see a `python` binary that you can acces
 with `./python`
 
-> !{IMPORTANT}
+> [!IMPORTANT]
 > the `./` is very important to indicate you want to run the
 > `python` you just build, and not a system one
 
