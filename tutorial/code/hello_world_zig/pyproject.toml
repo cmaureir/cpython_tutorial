@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "hello_zig"
+version = "1.0"
+include = [ { path = "src/", format = "sdist" }, { path = "hello/*.so", format = "wheel" } ]
+package-mode = false
+
+[tool.poetry.build]
+script = "build.py"
+
+[build-system]
+requires = ["poetry-core", "ziggy-pydust==0.25.1"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.pydust.ext_module]]
+name = "hello_zig"
+root = "src/hello.zig"

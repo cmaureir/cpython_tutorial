@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyconpt"
+version = "1.0"
+
+[tool.setuptools]
+ext-modules = [
+  {name = "pyconpt", sources = ["hello.c"]}
+]
