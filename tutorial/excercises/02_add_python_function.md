@@ -64,7 +64,7 @@ __all__ = ["glob", "rglob", "iglob", "escape", "translate"]
 Repeating the values from the parameters when calling `glob` allow us to have
 control on the behavior but only one is set to `True` which is `recursive`.
 
-After recompiling cpython, I will be able to do:
+After restarting the Python REPL (no recompilling needed for in source builds) I will be able to do:
 
 ```py
 >>> from glob import rglob
