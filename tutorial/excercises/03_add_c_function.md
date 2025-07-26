@@ -201,7 +201,7 @@ builtin_pdir(PyObject *self, PyObject *args)
        Py_DECREF(item); // References are for another day.
     }
     Py_DECREF(dir_list);
-    A
+    
     // Returned the filtered list
     return pdir_list;
 }
