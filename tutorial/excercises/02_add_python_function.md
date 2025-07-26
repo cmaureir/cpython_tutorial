@@ -47,8 +47,8 @@ be changed:
 
 ```py
 def rglob(pathname, *, root_dir=None, dir_fd=None, include_hidden=False):
-    glob(pathname, root_dir=root_dir, dir_fd=dir_fd, recursive=True,
-    include_hidden=include_hidden
+    return glob(pathname, root_dir=root_dir, dir_fd=dir_fd, recursive=True,
+    include_hidden=include_hidden)
 ```
 
 For this particular case, we need to also modify the `__all__` variable
