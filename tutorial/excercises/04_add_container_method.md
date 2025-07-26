@@ -92,7 +92,7 @@ without the need of passing the first `0` argument.
 
 We will modify two files:
 * `Objects/listobject.c`, and
-* `Objects/clinic/listobject.c`,
+* `Objects/clinic/listobject.c.h`,
 
 It is very convenient that we can mimic what `list.insert` does,
 so we don't need to implement everything by ourselves!
