@@ -62,18 +62,22 @@ si_stmt[stmt_ty]:
     | 'si' a=named_expression ':' b=block c=[else_block] { _PyAST_If(a, b, c, EXTRA) }
 ```
 
+> [!NOTE]
+> In the previous snippet, the `invalid_if_stmt` was not replaced, but it can
+> be replaced. The decision is only to simplify the steps.
+
 Please notice because we are mimicking the `if` functionality, we don't need to
 create a special function to handle this expression, and we can keep using
 `_PyAST_If`.
 
 Now you need to run:
 ```
-make regen-all -j8
+make regen-pegen -j8
 ```
 
-> [!NOTE]
-> In the previous snippet, the `invalid_if_stmt` was not replaced, but it can
-> be replaced. The decision is only to simplify the steps.
+
+> [!WARNING]
+> Running `make regen-all` will override some of the modifications we did in the previous steps.
 
 > [!TIP]
 > Feeling brave? what about you repeat the process for more keywords like
