@@ -75,7 +75,7 @@ make regen-all -j8
 > In the previous snippet, the `invalid_if_stmt` was not replaced, but it can
 > be replaced. The decision is only to simplify the steps.
 
-> [!OPTIONAL]
+> [!TIP]
 > Feeling brave? what about you repeat the process for more keywords like
 `while`, `for`, `and`, etc?
 
