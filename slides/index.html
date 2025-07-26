@@ -451,11 +451,6 @@ typedef struct _heaptypeobject {
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <h2>Creating a list from C</h2>
-  TODO
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
   <h3 class="r-fit-text">How does <i class="qt-lemon">C</i><i class="qt-violet">Python</i> works?</h3>
 </section>
 
@@ -487,6 +482,10 @@ typedef struct _heaptypeobject {
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
   <h3><i class="qt-lemon">End of First Part Presentation</i></h3>
   <h1 class="r-fit-text">Navigating cpython</h1>
+</section>
+
+<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
+  <p class="r-fit-text"><code>git clone https://github.com/cmaureir/cpython_tutorial</code></p>
 </section>
 
 <!-- End of presentation -->
@@ -577,10 +576,14 @@ typedef struct _heaptypeobject {
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <h3>Excercise 03 - New C function in cpython</h3>
+  <h3 class="r-fit-text"><i class="qt-lemon">Excercise 03</i> - New C function in cpython</h3>
   <ul>
     <li>Consider functionality you know, and change it</li>
-    <li>For example: pdir() like dir() but for non_dunder attributes.
+    <li>For example:
+      <ul>
+        <li><i class="qt-neon">pdir()</i> like <i class="qt-neon">dir()</i> but for non_dunder attributes.</li>
+      </ul>
+    </li>
   </ul>
 </section>
 <!--
@@ -715,16 +718,30 @@ list_dneppa(PyListObject *self, PyObject *object)
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <h2>Creating a wheel for a C extension</h2>
-  TODO
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
   <h2>Binding generators</h2>
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
   <h2>C++: pybind11</h2>
+  <pre style="font-size: 65%; width: 90%;"><code class="cpp" data-trim data-noescape>
+  #include &lt;pybind11/pybind11.h&gt;
+
+  int add(int i, int j) {
+      return i + j;
+  }
+
+  PYBIND11_MODULE(example, m) {
+    // optional module docstring
+    m.doc() = "pybind11 example plugin";
+    m.def("add", &amp;add,
+      "A function that adds two numbers");
+  }
+  </code></pre>
+  <pre style="font-size: 50%; width: 90%;"><code class="bash" data-trim data-noescape>
+  $ c++ -O3 -Wall -shared -std=c++11 \
+    -fPIC $(python3 -m pybind11 --includes) example.cpp \
+    -o example$(python3-config --extension-suffix)
+  </code></pre>
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
@@ -797,6 +814,9 @@ fn pyberlin(_py: Python, m: &PyModule) -> PyResult<()> {
     Ok(())
 }
         </code></pre>
+  <pre style="font-size: 50%; width: 80%;"><code class="bash" data-trim data-noescape>
+  $ maturin develop
+  </code></pre>
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
@@ -834,451 +854,32 @@ Offer to pick any language and have a solution for a them
 </section>
 
 <section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <h3>Excercise 10 - Rewrite a Python functionality in Rust</h1>
+  <h3 class="r-fit-text"><i class="qt-lemon">Excercise 10</i> - Rewrite a Python functionality in Rust</h3>
   <ul>
     <li>Pick any functionality you like!</li>
     <li>Try to keep it minimal and simple first</li>
-    <li>For example: glob.glob</li>
+    <li>For example: <i class="qt-neon">glob.glob</i></li>
   </ul>
 </section>
+
+<section data-transition="fade-in fade-out" data-background-image="img/background_backcover.svg">
+  <div id="left">
+    <p><i class="qt-neon">Tutorial</i></p>
+    <h3 style="font-size: 90%;">Understanding and expanding Python: hand-on experience with the Python internals</h3>
+    <p class="x80">
+    Dr. <i class="qt-lemon">Cristián</i> Maureira-Fredes<br>
+    <hr class="yellow-line"/>
+    <span>@cmaureir</span><br/>
+    <img class="clean-img" src="img/bluesky.png">
+    <img class="clean-img" src="img/mastodon.png">
+    <img class="clean-img" src="img/github_white.png">
+    <img class="clean-img" src="img/linkedin.png">
+    </p>
+  </div>
+</section>
+
 
 <!-- END TUTORIAL -->
-
-
-<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-    <h2>Python can be <i class="red">difficult</i> as well</h2>
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <pre class="fade-in" data-fragment-index="1" style="font-size: 85%;width: 70%;"><code class="python" data-trim data-noescape>
-  *s,='abcde'
-  </code></pre>
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <pre class="fade-in" data-fragment-index="3" style="font-size: 200%;width: 50%;"><code class="python" data-trim data-noescape>
-      n&amp;~-n&lt;1
-      </code></pre>
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <pre class="fade-in" data-fragment-index="3" style="font-size: 80%;width: 80%;"><code class="python" data-trim data-noescape>
-  _='_=%r;print(_%%_)';print(_%_)
-  </code></pre>
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <pre class="fade-in" data-fragment-index="3" style="font-size: 20%;width: 50%;"><code class="python" data-trim data-noescape>
-x,y=[6            ,11]\
-,[  48,67           ];s\
- =[   x for         x   \
- in    vars          (  )]\
-  ;b=    vars(      )[s[  x[
-   0]]]   ;k=      list(  (b.
-      __dict__      .keys  (
-      ) )) ;g=      getattr(b
-            ,k[x[1]*2]);m=g(
-            b,k[y[1]+1]);l=g\
-            (b              ,k
-            [x              [1
-          ]*        3]    ); i=\
-          g(        b,    k[  x[
-            1]        *6]);p   =g\
-            (b        ,k[y[0    ]-
-              x[0]])  ;a=g(g(b,k
-              [x[0]]  )("".join(
-              m(    g(b,k[      x[
-              0]    //2+x[      1]
-              ])    ,(m(          g(
-              b,    k[y[          0]
-              -1    ])  ,g(b,k[x  [1]+
-              y[    1]  +1])([*[  g(b,
-            k[        y[0]-1])  (y)]  *3
-            ],        [0,x[0],  0]))  ))
-          ))  ,"".            join(m(g(b
-          ,k  [x[0            ]//2+x[1]]
-        ),      (m                  (g
-        (b      ,k                  [y
-        [0        ]-                1]
-        ),        g(                b,
-    k[x[1]      +y[1              ]+1]
-    )([*[g      (b,k              [y[0
-  ]-    1])(      y)  ]*4],[x[0]*-  3,-1
-  ,x    [0]*      -2  ,x[0]//2])))  )));
-p(i((1/5**.5)*(((1+5**.5)/2)**(i(a[1])+1)-((1
--5**.5)/2)**(i(a[1])+1)))) if l(a)>1 else p(1)
-      </code></pre>
-      <p style="font-size: 50%;">Most reproducible winner - <a href="https://pyobfusc.com/#winners">https://pyobfusc.com/#winners</a></p>
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <img src="img/zig_logo.svg" />
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/qtws_back_zig.png">
-  <h3>Zig</h3>
-  <div id="left">
-    <ul style="font-size: 80%;">
-      <li class="fragment">No hidden <i class="qt-mandarin">control flow</i>, nor <i class="qt-mandarin">memory alloc</i></li>
-      <li class="fragment">No preprocessor, no macros</li>
-      <li class="fragment"><i class="qt-mandarin">Metaprogramming</i>: compile-time code execution and lazy evaluation (<code><i class="qt-lemon">comptime</i></code>)</li>
-      <li class="fragment">Tests, test, test!</li>
-    </ul>
-  </div>
-  <div id="right">
-    <pre style="font-size: 34%;width: 90%;"><code class="zig" data-trim data-noescape>
-    // main.zig
-    const std = @import("std");
-
-    pub fn main() !void {
-      const stdout = std.io.getStdOut().writer();
-      try stdout.print("Hello, {s}!\n", .{"world"});
-    }
-    </code></pre>
-    <pre style="font-size: 50%;width: 90%;"><code class="bash" data-trim data-noescape>
-    $ zig build-exe main.zig
-    $ ./hello
-    Hello, world!
-    </code></pre>
-  </div>
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/qtws_back_zig.png">
-  <h3>Zig - Highlights (1/5)</h3>
-  <h4>Integration with C-libraries <i class="red">without</i> FFI/bindings</h4>
-  <pre style="font-size: 38%;width: 95%;"><code class="zig" data-trim data-noescape>
-const c = @cImport({
-    // See https://github.com/ziglang/zig/issues/515
-    @cDefine("_NO_CRT_STDIO_INLINE", "1");
-    @cInclude("stdio.h");
-});
-pub fn main() void {
-    _ = c.printf("hello\n");
-}
-  </code></pre>
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/qtws_back_zig.png">
-  <h3>Zig - Highlights (2/5)</h3>
-  <h4><i class="qt-lemon">comptime</i> and <i class="qt-lemon">test</i></h4>
-  <div id="left">
-  <pre style="font-size: 38%;width: 95%;"><code class="zig" data-trim data-noescape>
-  fn max(comptime T: type, a: T, b: T) T {
-    return if (a &gt; b) a else b;
-  }
-  fn gimmeTheBiggerFloat(a: f32, b: f32) f32 {
-    return max(f32, a, b);
-  }
-  fn gimmeTheBiggerInteger(a: u64, b: u64) u64 {
-    return max(u64, a, b);
-  }
-  </code></pre>
-
-  <pre style="font-size: 38%;width: 95%;"><code class="zig" data-trim data-noescape>
-  // array literal
-  const m = [_]u8{ 'h', 'e', 'l', 'l', 'o' };
-
-  // get the size of an array
-  comptime {
-    assert(m.len == 5);
-  }
-  </code></pre>
-  </div>
-  <div class="fragment" id="right">
-  <pre style="font-size: 45%;width: 95%;"><code class="zig" data-trim data-noescape>
-  const std = @import("std");
-  const expect = std.testing.expect;
-
-  test {
-      const a = {};
-      const b = void{};
-      try expect(@TypeOf(a) == void);
-      try expect(@TypeOf(b) == void);
-      try expect(a == b);
-  }
-  </code></pre>
-  </div>
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/qtws_back_zig.png">
-  <h3>Zig - Highlights (3/5)</h3>
-  <h4>Tools</h4>
-  <pre style="font-size: 38%;width: 95%;"><code class="bash" data-trim data-noescape>
-$ zig init-exe
-info: Created build.zig
-info: Created src/main.zig
-info: Next, try `zig build --help` or `zig build run`
-$ tree
-.
-├── build.zig
-└── src
-    └── main.zig
-
-2 directories, 2 files
-  </code></pre>
-  <pre class="fragment" style="font-size: 38%;width: 95%;"><code class="bash" data-trim data-noescape>
-🥑 ~/yourapp2  % tree zig-out
-zig-out
-└── bin
-    └── yourapp2
-$ zig build run
-All your codebase are belong to us.
-Run `zig build test` to run the tests.
-  </code></pre>
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/qtws_back_zig.png">
-  <h3>Zig - Highlights (4/5)</h3>
-  <h4>Cross compilation</h4>
-  </code></pre>
-  <pre class="fragment" style="font-size: 38%;width: 95%;"><code class="bash" data-trim data-noescape>
-$  zig build-exe src/main.zig -target x86_64-windows-gnu
-$  file main.exe
-main.exe: PE32+ executable (console) x86-64, for MS Windows, 7 sections
-  </code></pre>
-
-  <pre class="fragment" style="font-size: 38%;width: 95%;"><code class="bash" data-trim data-noescape>
-$  zig build-exe src/main.zig -target aarch64-linux-musl
-$  file main
-main: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, with debug_info, not stripped
-  </code></pre>
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/qtws_back_zig.png">
-  <h3>Zig - Highlights (5/5)</h3>
-  <div id="left">
-  <ul style="font-size: 80%;">
-    <li class="fragment">custom allocators</li>
-    <li class="fragment">Faster and safer than C (*)</li>
-    <li class="fragment"><i class="red">active development</i></li>
-  </ul>
-  </div>
-  <div class="fragment" id="right">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/YXrb-DqsBNU?si=iV59s_a-Xw5Tgp8H" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    <p style="font-size: 40%;"> Intro to the Zig Programming Language • Andrew Kelley • GOTO 2022 </p>
-  </div>
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/background_stars.svg">
-  <h3>Ziggy PyDust (Zig)</h3>
-  <pre style="font-size: 50%; width: 90%;"><code class="zig" data-trim data-noescape>
-  const py = @import("pydust");
-
-  pub fn add(args: struct { a: i32, b: i32 }) i32 {
-      return args.a + args.b;
-  }
-
-  comptime {
-    py.rootmodule(@This());
-  }
-  </code></pre>
-  <pre style="font-size: 50%; width: 90%;"><code class="bash" data-trim data-noescape>
-  $ poetry install
-  </code></pre>
-</section>
-
-
-<section class="slide-red" data-transition="fade-in fade-out">
-  But you haven't mentioned Rust!
-</section>
-
-<section class="slide-red" data-transition="fade-in fade-out">
-  <img style="width: 50%;"src="img/rust_logo.svg"/>
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/qtws_back_rust.png">
-  <h3>Rust</h3>
-  <div id="left">
-    <ul style="font-size: 90%;">
-      <li class="fragment"><i class="qt-lemon">Performance</i>
-        <ul style="font-size: 70%;">
-          <li>Fast and memory efficient (no runtime or GC).</li>
-        </ul>
-      </li>
-      <li class="fragment"><i class="qt-lemon">Reliability</i>
-        <ul style="font-size: 70%;">
-          <li>Rich type system and ownership model (mem and thread safety)</li>
-        </ul>
-      </li>
-      <li class="fragment"><i class="qt-lemon">Productivity</i>
-        <ul style="font-size: 70%;">
-          <li>Docs, friendly compiler, package manager and build tool.</li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-  <div id="right">
-    <pre style="font-size: 50%;width: 80%;"><code class="rust" data-trim data-noescape>
-    fn main() {
-      println!("Hello, world!");
-    }
-    </code></pre>
-    <pre style="font-size: 60%;width: 80%;"><code class="bash" data-trim data-noescape>
-    $ rustc main.rs
-    $ ./main
-    Hello, world!
-    </code></pre>
-  </div>
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/background_rust.svg">
-  <h1>Why we adopted it?</h1>
-</section>
-
-<section data-transition="fade-in fade-out">
-  <h3>Python extension with Rust (PyO3)</h3>
-  <pre style="font-size: 50%;width: 80%;"><code class="rust" data-trim data-noescape>
-use pyo3::prelude::*;
-
-/// Formats the sum of two numbers as string.
-#[pyfunction]
-fn hello(s: &str) -> PyResult<String> {
-    let msg = format!("Sorry, not sorry {s}!");
-    Ok(msg)
-}
-
-/// A Python module implemented in Rust.
-#[pymodule]
-fn ep2025(_py: Python, m: &PyModule) -> PyResult<()> {
-    m.add_function(wrap_pyfunction!(hello, m)?)?;
-    Ok(())
-}
-        </code></pre>
-      </section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/background_rust.svg">
-  <pre style="font-size: 45%; width: 100%;"><code class="rust" data-trim data-noescape>
-use pyo3::{prelude::*, types::PyList};
-use std::fs;
-use walkdir::WalkDir;
-
-#[pyfunction]
-fn glob(py: Python<'_>, path: String, recursive: Option<bool>) -> PyResult<&PyList> {
-    let list: &PyList = PyList::empty(py);
-    if recursive.unwrap_or(false) == false {
-        for path in fs::read_dir(path).unwrap() {
-            let _ = list.append(path.unwrap().path().display().to_string());
-        }
-    } else {
-        for path in WalkDir::new(path) {
-            let _ = list.append(path.unwrap().path().display().to_string());
-        }
-    };
-    Ok(list)
-}
-
-#[pymodule]
-fn rust_glob(_py: Python, m: &PyModule) -> PyResult<()> {
-    m.add_function(wrap_pyfunction!(glob, m)?)?;
-    Ok(())
-}
-  </code></pre>
-</section>
-
-<section data-transition="fade-in fade-out">
-  <h3>Setup &amp; benchmark</h3>
-  <p><i class="qt-neon">1K directories, 1M files</i></p>
-  <table style="font-size: 85%;">
-  <tr style="font-size: 75%;">
-    <td></td>
-    <td>Non-recursive (s)</td>
-    <td>Recursive (s)</td>
-    <td>Improvement</td>
-  </tr>
-  <tr>
-    <td><code>glob</code></td>
-    <td>0.00208</td>
-    <td><i class="qt-lemon">5.65685</i></td>
-    <td>-</td>
-  </tr>
-  <tr class="fragment">
-    <td><code>Path.glob</code></td>
-    <td>2.66983</td>
-    <td><i class="qt-lemon">2.93025</i></td>
-    <td><i class="qt-lemon">48.7%</i></td>
-  </tr>
-  <tr class="fragment">
-    <td><code><i class="red">Rust glob (PyO3)</i></code></td>
-    <td>0.00088</td>
-    <td><i class="qt-lemon">0.88313</i></td>
-    <td><i class="qt-lemon">84.7%</i>🎉</td>
-  </tr>
-  <tr class="fragment" >
-    <td><code><i class="blue">C++ glob</i></code></td>
-    <td>0.00063</td>
-    <td><i class="qt-lemon">0.58559</i></td>
-    <td><i class="qt-lemon">89.7%</i>🫣</td>
-  </tr>
-  </table>
-</section>
-
-<section data-transition="fade-in fade-out" data-background-image="img/background_rust.svg">
-  <pre style="font-size: 45%; width: 100%;"><code class="cpp" data-trim data-noescape>
-static PyObject* fastglob_glob(PyObject* self, PyObject* args, PyObject* kwds){
-    // Parsing the arguments
-    ...
-
-    // Creating empty list
-    PyObject *l = PyList_New(0);
-
-    // Filling the list depending if it's recursive or not
-    if (recursive) {
-        for (const auto &entry : fs::recursive_directory_iterator(directory))
-            PyList_Append(l, PyUnicode_FromString(entry.path().c_str()));
-    } else {
-        for (const auto &entry : fs::directory_iterator(directory))
-            PyList_Append(l, PyUnicode_FromString(entry.path().c_str()));
-    }
-
-    return l;
-}
-
-  </code></pre>
-</section>
-
-<section data-transition="fade-in fade-out">
-  <h3>Setup &amp; benchmark</h3>
-  <p><i class="qt-neon">1K directories, 1M files</i></p>
-  <table style="font-size: 85%;">
-  <tr style="font-size: 75%;">
-    <td></td>
-    <td>Non-recursive (s)</td>
-    <td>Recursive (s)</td>
-    <td>Improvement</td>
-  </tr>
-  <tr>
-    <td><code>glob</code></td>
-    <td>0.00208</td>
-    <td><i class="qt-lemon">5.65685</i></td>
-    <td>-</td>
-  </tr>
-  <tr>
-    <td><code>Path.glob</code></td>
-    <td>2.66983</td>
-    <td><i class="qt-lemon">2.93025</i></td>
-    <td><i class="qt-lemon">48.7%</i></td>
-  </tr>
-  <tr>
-    <td><code><i class="red">Rust glob (PyO3)</i></code></td>
-    <td>0.00088</td>
-    <td><i class="qt-lemon">0.88313</i></td>
-    <td><i class="qt-lemon">84.5%</i></td>
-  </tr>
-  <tr>
-    <td><code><i class="blue">C++ glob</i></code></td>
-    <td>0.00063</td>
-    <td><i class="qt-lemon">0.58559</i></td>
-    <td><i class="qt-lemon">89.7%</i></td>
-  </tr>
-  <tr class="fragment" >
-    <td><code><i class="blue">C++ nanobind</i></code></td>
-    <td>0.00053</td>
-    <td><i class="qt-lemon">0.59322</i></td>
-    <td><i class="qt-lemon">89.5%</i></td>
-  </tr>
-  </table>
-</section>
-
 
     </div>
   </div>
