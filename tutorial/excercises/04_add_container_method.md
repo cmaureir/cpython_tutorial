@@ -90,9 +90,9 @@ To simplify this, we could think of adding the `list.prepend` function
 that does exactly what we did with the `list.insert` function,
 without the need of passing the first `0` argument.
 
-We will modify two files:
-* `Objects/listobject.c`, and
-* `Objects/clinic/listobject.c.h`,
+We will modify one file: `Objects/listobject.c`, and thanks to the [argument
+clinic](https://devguide.python.org/development-tools/clinic/) some code
+will be generated in `Objects/listobject.c.h` to enable the new method.
 
 It is very convenient that we can mimic what `list.insert` does,
 so we don't need to implement everything by ourselves!
@@ -118,108 +118,123 @@ static PyMethodDef list_methods[] = {
 
 Now, we need to create that macro.
 
-### Macro and implementation
+### Generating code with the argument clinic
 
-Find where the LIST_APPEND_METHODDEF is in the `Objects/clinic/listobject.c.h`
-file and copy the definitions, by transforming them accordingly to our new
-`list.prepend` method.
+On the `Objects/listsobject.c` file, we will add the following lines:
 
-For the initial macro, we will have:
 ```c
-#define LIST_PREPEND_METHODDEF    \
-    {"prepend", (PyCFunction)list_prepend, METH_O, list_prepend__doc__},
+/*[clinic input]
+@critical_section
+list.prepend
+
+    object: object
+    /
+
+Prepend object to the list.
+[clinic start generated code]*/
+{
+    if (ins1(self, 0, object) == 0) {
+        Py_RETURN_NONE;
+    }
+    return NULL;
+}
 ```
 
-For the documentation, we will have:
-```c
+It might look complicated, but it's a very convenient way of writing
+the implementation of our function first, and then leave the clinic
+do its magic.
+
+Notices that the section between `/* ... */` in C is a comment,
+so we need to be very careful with what we put inside, because that is the
+input for the argument clinic.
+
+We specify the name of the method `list.prepend` that will accept only one
+object: `object: object` and the documentation for the function: `Prepend
+object to the list`.
+
+After that, we will be skipping a function signature, but we will only add the
+implementation of the function, based on the implementation of `list.insert`.
+
+You can see we are using `ins1(self, 0, object)` while the insert
+implementation has `ins1(self, index, object)`, because we know we will always
+use insert with index equals to 0.
+
+## Generating the code
+
+Once you copied that to the file, we will run the argument clinic, manually:
+```
+python3 ./Tools/clinic/clinic.py --force --make --exclude Lib/test/clinic.test.c --srcdir .
+```
+or using make via:
+```
+make regen-global-objects
+```
+
+Check the modified lines in `Objects/clinic/listobject.c.h` with:
+```
+git diff Objects/clinic/listobject.c.h
+```
+and it should show you something like this:
+
+```
 PyDoc_STRVAR(list_prepend__doc__,
 "prepend($self, object, /)\n"
 "--\n"
 "\n"
-"Prepend object to the beginning of the list.");
-```
+"Insert object before index.");
 
-And or the implementation of the method, we will copy the functionality from
-the `list.insert` method, by mimicking the `insert(0, value)` approach we tried
-before.
+#define LIST_PREPEND_METHODDEF    \
+    {"prepend", (PyCFunction)list_prepend, METH_O, list_prepend__doc__},
 
-This is the `list_insert` implementation:
-```c
-  static PyObject *
-  list_insert(PyObject *self, PyObject *const *args, Py_ssize_t nargs)
-  {
-      PyObject *return_value = NULL;
-      Py_ssize_t index;
-      PyObject *object;
+static PyObject *
+list_prepend_impl(PyListObject *self, PyObject *object);
 
-      if (!_PyArg_CheckPositional("insert", nargs, 2, 2)) {
-          goto exit;
-      }
-      {
-          Py_ssize_t ival = -1;
-          PyObject *iobj = _PyNumber_Index(args[0]);
-          if (iobj != NULL) {
-              ival = PyLong_AsSsize_t(iobj);
-              Py_DECREF(iobj);
-          }
-          if (ival == -1 && PyErr_Occurred()) {
-              goto exit;
-          }
-          index = ival;
-      }
-      object = args[1];
-      Py_BEGIN_CRITICAL_SECTION(self);
-      return_value = list_insert_impl((PyListObject *)self, index, object);  // Bingo!
-      Py_END_CRITICAL_SECTION();
-
-  exit:
-      return return_value;
-  }
-```
-
-where this line is what we need:
-```c
-return_value = list_insert_impl((PyListObject *)self, index, object);  // Bingo!
-```
-because we know the `index` in the `list.prepend` case will be `0` always.
-Let's keep in mind this line, and now let's check the `list.append`
-implementation:
-```c
-  static PyObject *
-  list_append(PyObject *self, PyObject *object)
-  {
-      PyObject *return_value = NULL;
-
-      Py_BEGIN_CRITICAL_SECTION(self);
-      return_value = list_append_impl((PyListObject *)self, object);
-      Py_END_CRITICAL_SECTION();
-
-      return return_value;
-  }
-```
-
-Can you see the line we need to replace? it's even easier if I tell you
-it's the same variable name (`return_value`).
-
-We will copy that implementation, rename the name of the function
-to `list_prepend` and replacing the critical section line with he one
-we took from the `list_insert` implementation.
-
-The final result looks like this:
-
-```c
 static PyObject *
 list_prepend(PyObject *self, PyObject *object)
 {
     PyObject *return_value = NULL;
 
     Py_BEGIN_CRITICAL_SECTION(self);
-    return_value = list_insert_impl((PyListObject *)self, 0, object);
+    return_value = list_prepend_impl((PyListObject *)self, object);
     Py_END_CRITICAL_SECTION();
 
     return return_value;
 }
 ```
+But even the file you edited: `Objects/listobject.c` was changed as well!
+If you open it will show a couple of new lines:
+```
+/*[clinic input]
+@critical_section
+list.prepend
+
+    object: object
+    /
+
+Insert object before index.
+[clinic start generated code]*/
+
+static PyObject *
+list_prepend_impl(PyListObject *self, PyObject *object)
+/*[clinic end generated code: output=1e8a17b6bb55190f input=12086cf6fd59ee03]*/
+{
+    if (ins1(self, 0, object) == 0) {
+        Py_RETURN_NONE;
+    }
+    return NULL;
+}
+```
+
+Did you see them? they are:
+```
+static PyObject *
+list_prepend_impl(PyListObject *self, PyObject *object)
+/*[clinic end generated code: output=1e8a17b6bb55190f input=12086cf6fd59ee03]*/
+```
+
+That was generated automatically, added a checksum and everything :)
+
+## Compiling and trying
 
 Finally, we can recompile cpython, and try it out!
 
