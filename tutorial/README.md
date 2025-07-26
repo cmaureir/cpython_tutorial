@@ -20,7 +20,7 @@ so you can access the code that we will use:
 ```
 git clone https://github.com/python/cpython
 ```
-in case your interenet is not so good, you can do a clone of the last
+in case your Internet is not so good, you can do a clone of the last
 commit from the repository (also called *shallow clone*) by using:
 
 ```
@@ -32,7 +32,7 @@ You are now prepared to start the tutorial!
 ## What's next?
 
 There are two main sections on this tutorial,
-each one will be followed by a couple of excercises, which you can find in the
+each one will be followed by a couple of exercises, which you can find in the
 [exercises directory](excercises/).
 
 You can access them directly from here:

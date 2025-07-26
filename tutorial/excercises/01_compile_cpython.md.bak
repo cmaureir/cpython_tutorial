@@ -10,7 +10,7 @@ Compiling Python from its source might sounds like a very complicated process,
 and many people don't even try it due to that. Hopefully after this tutorial
 you will manage to overcome this and do it yourself!
 
-You learned in the previous exercise that you can compile one C-file with
+You learned in the previous excercise that you can compile one C-file with
 a simple command line, but in the case of large projects, you need the help
 of other tools that can simplify the process of compiling each file, and
 creating the final executable for you.
@@ -25,7 +25,7 @@ Before building the project, we need to first configure it,
 for that you need to run:
 
 ```
-./configure     # add --with-openssl=$(brew --prefix openssl) for macOS
+./configure
 ```
 this shouldn't take a lot of time, between 20 seconds to a couple of minutes,
 depending on your machine resources, and you will see a lot of things
@@ -36,16 +36,16 @@ re-run the command.
 
 Once the configuration is done, you can now run the `make` command to build the
 project, this might take time, so it's recommended for you to enable more CPU
-cores from your system to use while building with the `-j` option. Assuming
+cores from your system to use while building with the `-j` option. Assumming
 you have 16 cores, you could run:
 
 ```
 make -j 16
 ```
 
-Change the number accordingly.
+Change the number accordinly.
 
-Once this process is over, you will see a `python` binary that you can access
+Once this process is over, you will see a `python` binary that you can acces
 with `./python`
 
 > [!IMPORTANT]

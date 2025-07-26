@@ -1,6 +1,6 @@
-# Exercise 08: Minimal "Hello, World!" Rust-extension
+# Excercise 08: Minimal "Hello, World!" Rust-extension
 
-Similarly to the last exercise, we will not have enough time to learn many
+Similarly to the last excercise, we will not have enough time to learn many
 details from the Rust language, but at least the minimum to understand how to
 create extensions.
 

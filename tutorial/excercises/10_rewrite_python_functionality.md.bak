@@ -1,7 +1,7 @@
-# Exercise 10: Re-write Python functionality in Rust
+# Excercise 10: Re-write Python functionality in Rust
 
 This is the final test.
-All the effort you put in the previous exercises will pay off in this step.
+All the effort you put in the previous excercises will pay off in this step.
 
 With the growing popularity from Rust, you need to think of one of the
 functions that Python includes which is written in Python (`Lib/` directory)

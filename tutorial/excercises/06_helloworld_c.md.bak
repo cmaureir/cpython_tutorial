@@ -1,17 +1,17 @@
-# Exercise 06: Minimal "Hello, World!" C-extension
+# Excercise 06: Minimal "Hello, World!" C-extension
 
 > [!NOTE]
 > There is a very good and detailed guide in the official Python documentation
 > that you can check for more information.
 > Check it [here](https://docs.python.org/3/extending/extending.html).
 
-In this exercise we will create a new Python module written in C.
+In this excercise we will create a new Python module written in C.
 This might sound very complicated, but don't be scared!
 
 While writing the code, there a few steps we need to follow in order to get to
 a state where we could write the C-code.
 
-Let's open a `hello.c` file and let's tart our adventure
+Let's open a `hello.c` file and let's tart our daventure
 
 ## Add the base C function
 
@@ -52,7 +52,7 @@ have any arguments with `METH_NOARGS`.
 
 ## Add the module definition
 
-Before initializing the module, we need to define the structure with a few
+Beofre initializing the module, we need to define the structure with a few
 placeholder elements, but the most important part is to pass the module name
 but also the methods definitions:
 

@@ -1,10 +1,10 @@
-# Exercise 03: Add a C-function to CPython built-ins
+# Excercise 03: Add a C-function to CPython built-ins
 
-This exercise can be a bit tricky for the people that is not too familiarized
+This excercise can be a bit tricky for the people that is not too familiarized
 with C, but with the help of the Python C-API the implementation can be a bit
 simpler.
 
-The goal of this exercise, is to experience the structure and details for all
+The goal of this excercise, is to experience the structure and details for all
 the C components within Python, so take your time when trying to learn this.
 
 You can try any file from the `Modules/` directory, but also you can find
@@ -93,7 +93,7 @@ but from C, and using some of Python's C-API.
 
 ### Writing Python code that looks closer to C
 
-If we write that comprehension more explicitly, and incorporating
+If we write that comprehension more explicitely, and incorporating
 a few C-isms so it's easier for us to write the C code.
 
 ```py
@@ -119,7 +119,7 @@ To prepare ourselves, let's write down the equivalents of the C-API
 so we can re-write it to C:
 
 * `PyList_New`, to create a list,
-* `PyList_Size`, to get the length of a list,
+* `PyList_Size`, to get the lenght of a list,
 * `PyList_GetItem`, to get an item in a specific position.
 
 Keep also in mind that Python objects will be `PyObject`,
@@ -201,7 +201,7 @@ builtin_pdir(PyObject *self, PyObject *args)
        Py_DECREF(item); // References are for another day.
     }
     Py_DECREF(dir_list);
-    
+    A
     // Returned the filtered list
     return pdir_list;
 }

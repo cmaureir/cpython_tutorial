@@ -1,4 +1,4 @@
-# Exercise 04: Add a new container method
+# Excercise 04: Add a new container method
 
 There are many convenient containers in Python: `list`, `tuple`, `dict`, `set`,
 etc.
@@ -9,7 +9,7 @@ etc.
 Many of them have convenient methods that allow us to add/remove/modify
 elements within them.
 
-The goal of this exercise is add a new one to any of your favorite containers.
+The goal of this excercise is add a new one to any of your favorite containers.
 To do this, I recommend you to first try to mimic a functionality of another
 method but do it slightly different.
 
@@ -37,7 +37,7 @@ code that can be found in `Objects/clinic/setobject.h.c`:
     {"add", (PyCFunction)set_add, METH_O, set_add__doc__},
 ```
 
-2. Add your new definition in both sides, for example if we create a different
+2. Add your new defintion in both sides, for example if we create a different
    `set.add` implementation and we call it `set.add2`:
 
 ```c
@@ -78,7 +78,7 @@ new elements to a list:
 [42, 21]
 ```
 
-What if I want to add an element at the beginning o the list?
+What if I want to add an element at the begining o the list?
 Many (if not all) of you will jump and say «Use `list.insert`!»,
 which is a correct!
 ```py
@@ -92,7 +92,7 @@ without the need of passing the first `0` argument.
 
 We will modify two files:
 * `Objects/listobject.c`, and
-* `Objects/clinic/listobject.c.h`,
+* `Objects/clinic/listobject.c`,
 
 It is very convenient that we can mimic what `list.insert` does,
 so we don't need to implement everything by ourselves!
@@ -121,7 +121,7 @@ Now, we need to create that macro.
 ### Macro and implementation
 
 Find where the LIST_APPEND_METHODDEF is in the `Objects/clinic/listobject.c.h`
-file and copy the definitions, by transforming them accordingly to our new
+file and copy the definitions, by transforming them accordenly to our new
 `list.prepend` method.
 
 For the initial macro, we will have:
@@ -140,7 +140,7 @@ PyDoc_STRVAR(list_prepend__doc__,
 ```
 
 And or the implementation of the method, we will copy the functionality from
-the `list.insert` method, by mimicking the `insert(0, value)` approach we tried
+the `list.insert` method, by mimicing the `insert(0, value)` approach we tried
 before.
 
 This is the `list_insert` implementation:
@@ -181,7 +181,7 @@ where this line is what we need:
 ```c
 return_value = list_insert_impl((PyListObject *)self, index, object);  // Bingo!
 ```
-because we know the `index` in the `list.prepend` case will be `0` always.
+becuase we know the `index` in the `list.prepend` case will be `0` always.
 Let's keep in mind this line, and now let's check the `list.append`
 implementation:
 ```c
@@ -199,7 +199,7 @@ implementation:
 ```
 
 Can you see the line we need to replace? it's even easier if I tell you
-it's the same variable name (`return_value`).
+it's the sme variable name (`return_value`).
 
 We will copy that implementation, rename the name of the function
 to `list_prepend` and replacing the critical section line with he one
