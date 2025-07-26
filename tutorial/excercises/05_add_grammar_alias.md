@@ -71,6 +71,7 @@ create a special function to handle this expression, and we can keep using
 > In the previous snippet, the `invalid_if_stmt` was not replaced, but it can
 > be replaced. The decision is only to simplify the steps.
 
-> [!TIP]
+> [!OPTIONAL]
 > Feeling brave? what about you repeat the process for more keywords like
 `while`, `for`, `and`, etc?
+

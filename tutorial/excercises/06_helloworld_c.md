@@ -114,3 +114,8 @@ that you can install, for later execute like:
 >>> hello()
 "Hey there PyCon Portugal!"
 ```
+
+> [!OPTIONAL]
+> What if you would like to do this in C++?
+> Check out `std::string` as a type and replace the content of the hello
+> function
