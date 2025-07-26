@@ -25,7 +25,7 @@ Before building the project, we need to first configure it,
 for that you need to run:
 
 ```
-./configure
+./configure     # add --with-openssl=$(brew --prefix openssl) for macOS
 ```
 this shouldn't take a lot of time, between 20 seconds to a couple of minutes,
 depending on your machine resources, and you will see a lot of things
