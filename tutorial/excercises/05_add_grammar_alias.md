@@ -55,7 +55,6 @@ compound_stmt[stmt_ty]:
 ```
 and also
 ```
-```
 si_stmt[stmt_ty]:
     | invalid_if_stmt
     | 'si' a=named_expression ':' b=block c=elif_stmt {
@@ -66,6 +65,11 @@ si_stmt[stmt_ty]:
 Please notice because we are mimicking the `if` functionality, we don't need to
 create a special function to handle this expression, and we can keep using
 `_PyAST_If`.
+
+Now you need to run:
+```
+make regen-all -j8
+```
 
 > [!NOTE]
 > In the previous snippet, the `invalid_if_stmt` was not replaced, but it can
