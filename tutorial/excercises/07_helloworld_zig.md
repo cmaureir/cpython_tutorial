@@ -1,7 +1,7 @@
 # Exercise 07: Minimal "Hello, World!" Zig-extension
 
 Zig is a different programming language, so we will not have enough time to
-enter into the details of it, but you will know enough to get started and
+go into the details of it, but you will know enough to get started and
 create a simple extension.
 
 ## Install the Zig compiler
@@ -9,7 +9,7 @@ create a simple extension.
 Please follow [the getting started guide](https://ziglang.org/learn/getting-started/)
 from the Zig language website in order to have the compiler.
 
-You will find the instructions for macOS, Linux and Windows, with many
+You will find the instructions for macOS, Linux, and Windows, with many
 variations.
 
 ## Hello, World!
@@ -23,11 +23,15 @@ pub fn main() !void {
     std.debug.print("Hello, World!\n", .{});
 }
 ```
+
 and to execute the code you can run:
+
 ```bash
 zig run hello.zig
 ```
+
 you can also build the code, to later run the binary manually:
+
 ```bash
 $ zig build-exe hello.zig
 $ ./hello
@@ -39,7 +43,7 @@ Hello, World!
 The project that enables Zig to be an option to write Python extensions is
 called Ziggy PyDust.
 
-The binding generator uses `poetry` to handle projects, and requires
+The binding generator uses `poetry` to handle projects and requires
 some configuration.
 
 First, create a `pyproject.toml` file with the following content:
@@ -63,13 +67,16 @@ root = "src/hello.zig"
 ```
 
 also, you need a simple `build.py` file alongside:
+
 ```py
 from pydust.build import build
 
 build()
 ```
+
 and for the source code for our extension,
 create a `src` directory and inside a file `hello.zig` with the content:
+
 ```zig
 const py = @import("pydust");
 
@@ -84,7 +91,7 @@ comptime {
 }
 ```
 
-With all the files in place, you can run `poetry install` for later execute
+With all the files in place, you can run `poetry install` to later execute
 the code:
 
 ```py
