@@ -1,11 +1,11 @@
 # Exercise 02: Add a Python function to CPython
 
-You probably already now that the `Lib/` directory within cpython contains all
-the Python-based modules that Python includes. You are probably familiar to
+You probably already know that the `Lib/` directory within CPython contains all
+the Python-based modules that Python includes. You are probably familiar with
 many of them, so the goal will be to pick one of them, so you can add a new
 one.
 
-This might sounds too complicated, but the recommendation is to pick a module
+This might sound too complicated, but the recommendation is to pick a module
 that has a function, and maybe re-write a variation for that function, by
 removing one or more keyword arguments, and provide a simplified version.
 
@@ -28,17 +28,17 @@ If you are not familiar with this function, check the following example:
 from glob import glob
 
 >>> glob("tutorial/**")
-['tutorial/01_understanding_cpython.md', 'tutorial/02_extending_python.md', 'tutorial/excercises', 'tutorial/00_setup.md']
+['tutorial/01_understanding_cpython.md', 'tutorial/02_extending_python.md', 'tutorial/exercises', 'tutorial/00_setup.md']
 ```
 
-The pattern `**` means that everything it's found inside the `tutorial`
-directory will be listed, but as you probably notice, the `tutorial/excercises`
+The pattern `**` means that everything found inside the `tutorial`
+directory will be listed, but as you probably notice, the `tutorial/exercises`
 directory content was not listed. For that, `glob` provides a way to do it
 recursively, so you can call the function like this:
 
 ```py
 >>> glob("tutorial/**", recursive=True)
-['tutorial/', 'tutorial/01_understanding_cpython.md', 'tutorial/02_extending_python.md', 'tutorial/excercises', 'tutorial/excercises/07_helloworld_zig.md', 'tutorial/excercises/03_add_c_function.md', 'tutorial/excercises/01_compile_cpython.md', 'tutorial/excercises/04_add_container_method.md', 'tutorial/excercises/00_compile_cprogram.md', 'tutorial/excercises/02_add_python_function.md', 'tutorial/excercises/05_add_grammar_alias.md', 'tutorial/excercises/10_rewrite_python_functionality.md', 'tutorial/excercises/06_helloworld_c.md', 'tutorial/excercises/09_module_with_functions.md', 'tutorial/excercises/08_helloworld_rust.md', 'tutorial/00_setup.md']
+['tutorial/', 'tutorial/01_understanding_cpython.md', 'tutorial/02_extending_python.md', 'tutorial/exercises', 'tutorial/exercises/07_helloworld_zig.md', 'tutorial/exercises/03_add_c_function.md', 'tutorial/exercises/01_compile_cpython.md', 'tutorial/exercises/04_add_container_method.md', 'tutorial/exercises/00_compile_cprogram.md', 'tutorial/exercises/02_add_python_function.md', 'tutorial/exercises/05_add_grammar_alias.md', 'tutorial/exercises/10_rewrite_python_functionality.md', 'tutorial/exercises/06_helloworld_c.md', 'tutorial/exercises/09_module_with_functions.md', 'tutorial/exercises/08_helloworld_rust.md', 'tutorial/00_setup.md']
 ```
 
 To have this behavior by default, we could create `rglob` to be a variation of
@@ -49,29 +49,28 @@ be changed:
 def rglob(pathname, *, root_dir=None, dir_fd=None, include_hidden=False):
     return glob(pathname, root_dir=root_dir, dir_fd=dir_fd, recursive=True,
     include_hidden=include_hidden)
-```
 
 For this particular case, we need to also modify the `__all__` variable
 from:
 ```py
 __all__ = ["glob", "iglob", "escape", "translate"]
 ```
-by
+to
 ```py
 __all__ = ["glob", "rglob", "iglob", "escape", "translate"]
 ```
 
-Repeating the values from the parameters when calling `glob` allow us to have
-control on the behavior but only one is set to `True` which is `recursive`.
+Repeating the values from the parameters when calling `glob` allows us to have
+control over the behavior but only one is set to `True` which is `recursive`.
 
-After restarting the Python REPL (no recompilling needed for in source builds) I will be able to do:
+After recompiling CPython, I will be able to do:
 
 ```py
 >>> from glob import rglob
 >>> rglob("tutorial/**")
-['tutorial/', 'tutorial/01_understanding_cpython.md', 'tutorial/02_extending_python.md', 'tutorial/excercises', 'tutorial/excercises/07_helloworld_zig.md', 'tutorial/excercises/03_add_c_function.md', 'tutorial/excercises/01_compile_cpython.md', 'tutorial/excercises/04_add_container_method.md', 'tutorial/excercises/00_compile_cprogram.md', 'tutorial/excercises/02_add_python_function.md', 'tutorial/excercises/05_add_grammar_alias.md', 'tutorial/excercises/10_rewrite_python_functionality.md', 'tutorial/excercises/06_helloworld_c.md', 'tutorial/excercises/09_module_with_functions.md', 'tutorial/excercises/08_helloworld_rust.md', 'tutorial/00_setup.md']
-
+['tutorial/', 'tutorial/01_understanding_cpython.md', 'tutorial/02_extending_python.md', 'tutorial/exercises', 'tutorial/exercises/07_helloworld_zig.md', 'tutorial/exercises/03_add_c_function.md', 'tutorial/exercises/01_compile_cpython.md', 'tutorial/exercises/04_add_container_method.md', 'tutorial/exercises/00_compile_cprogram.md', 'tutorial/exercises/02_add_python_function.md', 'tutorial/exercises/05_add_grammar_alias.md', 'tutorial/exercises/10_rewrite_python_functionality.md', 'tutorial/exercises/06_helloworld_c.md', 'tutorial/exercises/09_module_with_functions.md', 'tutorial/exercises/08_helloworld_rust.md', 'tutorial/00_setup.md']
 ```
+
 
 ## Optional challenge
 
