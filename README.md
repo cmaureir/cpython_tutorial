@@ -20,3 +20,13 @@ Here is an outline of what will be done:
 * Minimal C-extension for "Hello World"
 * Minimal Rust, and Zig extensions for "Hello World",
 * Create a new extension replacing Python functionality with C, Rust and Zig.
+
+## Contributors
+
+Thanks to everyone that has contributed to this tutorial by fixing typos,
+adding clarification of some of the discussed topics, and suggesting
+improvements!
+
+<a href="https://github.com/cmaureir/cpython_tutorial/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=cmaureir/cpython_tutorial" />
+</a>
