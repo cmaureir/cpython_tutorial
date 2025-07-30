@@ -9,7 +9,7 @@ create extensions.
 Please follow [the official website](https://www.rust-lang.org/tools/install)
 from the Rust language website in order to have the compiler.
 
-You will find the instructions for macOS, Linux and Windows, with many
+You will find the instructions for macOS, Linux, and Windows, with many
 variations.
 
 ## Hello, World!
@@ -21,12 +21,16 @@ fn main() {
     println!("Hello, World!");
 }
 ```
+
 to compile you need to run:
-```
+
+``` bash
 rustc hello.rs
 ```
+
 and to execute it:
-```
+
+``` bash
 ./hello
 ```
 
@@ -36,12 +40,10 @@ The project that enables Rust to be an option to write Python extensions is
 called PyO3, and the binding generator uses `maturin` to handle the build process.
 
 To start a new project, you need to run:
-```
 maturin init
-```
 
-This will create an starting project with a function that adds two numbers,
-but for consistency, you will remove that content, and replace it for the
+This will create a starting project with a function that adds two numbers,
+but for consistency, you will remove that content, and replace it with the
 following code in `src/lib.rs`:
 
 ```rust
@@ -51,7 +53,7 @@ use pyo3::prelude::*;
 fn hello() -> PyResult<String> {
     Ok("Hello, World!".to_string())
 }
-o
+
 #[pymodule]
 fn hello_world_rust(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(hello, m)?)?;
@@ -60,11 +62,12 @@ fn hello_world_rust(m: &Bound<'_, PyModule>) -> PyResult<()> {
 ```
 
 Everything else is configured automatically, so you need to run:
-```
+
+``` bash
 maturin develop
 ```
 
-in order to build, and install the package.
+in order to build and install the package.
 
 Once that process is done, you will be able to try it out like this:
 
