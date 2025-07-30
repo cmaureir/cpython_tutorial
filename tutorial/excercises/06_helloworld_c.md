@@ -5,21 +5,21 @@
 > that you can check for more information.
 > Check it [here](https://docs.python.org/3/extending/extending.html).
 
-In this exercise we will create a new Python module written in C.
+In this exercise, we will create a new Python module written in C.
 This might sound very complicated, but don't be scared!
 
-While writing the code, there a few steps we need to follow in order to get to
-a state where we could write the C-code.
+While writing the code, there are a few steps we need to follow in order to get to
+a state where we can write the C-code.
 
-Let's open a `hello.c` file and let's tart our adventure
+Let's open a `hello.c` file and start our adventure.
 
 ## Add the base C function
 
-The function needs to follow a few details from cpython in order to be
+The function needs to follow a few details from CPython in order to be
 compatible.
 To return a string, we need to convert a C-string to a Python string.
 
-Here's the code for the first step
+Here's the code for the first step:
 
 ```c
 #include <Python.h>
@@ -35,7 +35,7 @@ We still have a few steps before we can compile it!
 
 Because our module will have only one function, we will add only that one, and
 then add a couple of *C-None* called NULL to identify when the definition
-finished.
+finishes.
 
 Here's the methods definitions:
 
@@ -54,21 +54,21 @@ have any arguments with `METH_NOARGS`.
 
 Before initializing the module, we need to define the structure with a few
 placeholder elements, but the most important part is to pass the module name
-but also the methods definitions:
+and also the methods definitions:
 
 ```c
 static struct PyModuleDef module = {
     .m_base = PyModuleDef_HEAD_INIT,
-    .m_name ="pyconpt",
+    .m_name = "pyconpt",
     .m_size = 0,
-    .m_methods = the_methods,i
+    .m_methods = the_methods
 };
 ```
 
 ## Initialize the module
 
 For the last step from the C-side of things, we need to initialize the module
-in order to create the module
+in order to create the module.
 
 ```c
 PyMODINIT_FUNC PyInit_pyconpt(void){
@@ -96,7 +96,7 @@ ext-modules = [
 ]
 ```
 
-Install the `build` and `setuptools` python packages, and then run:
+Install the `build` and `setuptools` Python packages, and then run:
 
 ```bash
 python -m build -w
@@ -106,8 +106,8 @@ python -m build -w
 > Make sure the `python` executable is the one that has setuptools and build
 > installed.
 
-If everything succeed, you will have a `.whl` package in the `dist/` directory
-that you can install, for later execute like:
+If everything succeeds, you will have a `.whl` package in the `dist/` directory
+that you can install, to later execute like:
 
 ```py
 >>> from pyconpt import hello
